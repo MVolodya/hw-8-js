@@ -1,0 +1,59 @@
+body {
+    background: #fbfbfb;
+    color: #161616;
+    font-family: "Roboto", sans-serif;
+}
+
+#title {
+    position: relative;
+}
+
+h1#title::after {
+    content: '';
+    width: 40px;
+    height: 2px;
+    background-color: #161616;
+    position: absolute;
+    bottom: -15px;
+    left: 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+}
+.item {
+    width: 300px;
+    height: 200px;
+    margin: 20px;
+    background: #fff;
+    border-left: solid 3px red;
+    border-radius: 5px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.item:hover {
+    //height: 300px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    transition: all 2s cubic-bezier(.25,.8,.25,1);
+}
+
+
+.button-template {
+    border: none;
+    width: 80px;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.weigh-button{
+    background: #7999a9;
+    color: #fff;
+}
+
+.buy-button {
+    background: #416dea;
+    color: #fff;
+}
