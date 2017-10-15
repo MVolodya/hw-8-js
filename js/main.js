@@ -1,4 +1,5 @@
 let arrayOfProducts = [];
+let arrayOfUserBasket = [];
 
 function productItem(id, name, place, weigh, price, img) {
     this.id    = id;
@@ -18,21 +19,18 @@ initProductItems();
 
 
 function initProductItems() {
-    addProductItem(1, "Apple",       "fruit",          100, 2.5, "img/favicon.ico");
-    addProductItem(2, "Lemon",       "fruit",          100, 2.5, "img/favicon.ico");
-    addProductItem(3, "Orange",      "fruit",          100, 2.5, "img/favicon.ico");
-    addProductItem(4, "Eggplant",    "vegetables",     100, 2.5, "img/favicon.ico");
-    addProductItem(5, "Onion",       "vegetables",     100, 2.5, "img/favicon.ico");
-    addProductItem(6, "Green beans", "vegetables",     100, 2.5, "img/favicon.ico");
-    addProductItem(7, "Milk",        "dairy products", 100, 2.5, "img/favicon.ico");
-    addProductItem(8, "Cheese",      "dairy products", 100, 2.5, "img/favicon.ico");
-    addProductItem(9, "Butter",      "dairy products", 100, 2.5, "img/favicon.ico");
-    addProductItem(10, "Beef",       "meat",           100, 2.5, "img/favicon.ico");
-    addProductItem(11, "Chicken",    "meat",           100, 2.5, "img/favicon.ico");
-    addProductItem(12, "Pork",       "meat",           100, 2.5, "img/favicon.ico");
-    addProductItem(13, "Cookie",     "baking",         100, 2.5, "img/favicon.ico");
-    addProductItem(14, "Doughnut",   "baking",         100, 2.5, "img/favicon.ico");
-    addProductItem(15, "Cake",       "baking",         100, 2.5, "img/favicon.ico");
+    addProductItem(1, "Apple",       "fruit",          100, 1.2, "img/fruits/apple.png");
+    addProductItem(2, "Lemon",       "fruit",          100, 0.8, "img/fruits/lemon.png");
+    addProductItem(3, "Orange",      "fruit",          100, 2.0, "img/fruits/orange.png");
+    addProductItem(4, "Eggplant",    "vegetables",     100, 1.8, "img/vegetables/eggplant.png");
+    addProductItem(5, "Onion",       "vegetables",     100, 0.8, "img/vegetables/onion.png");
+    addProductItem(6, "Green beans", "vegetables",     100, 0.5, "img/vegetables/green-beans.png");
+    addProductItem(7, "Milk",        "dairy products", 100, 1.9, "img/dairy-products/milk.png");
+    addProductItem(8, "Cheese",      "dairy products", 100, 2.3, "img/dairy-products/cheese.png");
+    addProductItem(9, "Butter",      "dairy products", 100, 1.9, "img/dairy-products/butter.png");
+    addProductItem(10, "Cookie",     "baking",         100, 1.0, "img/baking/cookie.png");
+    addProductItem(11, "Doughnut",   "baking",         100, 1.5, "img/baking/doughnut.png");
+    addProductItem(12, "Cake",       "baking",         100, 2.5, "img/baking/cake.png");
 }
 
 renderProductItems();
@@ -44,9 +42,9 @@ function renderProductItems() {
         let textWeigh = arrayOfProducts[i].weigh;
         let textImg   = arrayOfProducts[i].img;
 
-        let textName  = document.createTextNode(arrayOfProducts[i].name);
-        let textPrice = document.createTextNode(arrayOfProducts[i].price);
-        let textPlace = document.createTextNode(arrayOfProducts[i].place);
+        let textName  = arrayOfProducts[i].name;
+        let textPrice = arrayOfProducts[i].price;
+        let textPlace = arrayOfProducts[i].place;
 
 
         listOfItems(textId, textName, textWeigh, textPrice, textPlace, textImg);
@@ -59,7 +57,10 @@ function listOfItems(textId, textName, textWeigh, textPrice, textPlace, textImg)
     let div = document.createElement('div');
     let img = document.createElement('img');
 
-    img.src = textImg
+
+    img.setAttribute('src', textImg);
+    img.setAttribute('width', '120px');
+    img.setAttribute('alt', textImg);
 
     div.setAttribute('id', textId);
     div.setAttribute('class', 'item');
@@ -80,6 +81,10 @@ function listOfItems(textId, textName, textWeigh, textPrice, textPlace, textImg)
     divPlace.setAttribute('class', 'product-place');
     divImg.setAttribute('class', 'product-img');
 
+    textName = document.createTextNode(textName);
+    textPrice = document.createTextNode(textPrice + "$");
+    textPlace =  document.createTextNode(textPlace);
+
     divName.appendChild(textName);
     divWeigh.appendChild(inputTypeNumber);
     divPrice.appendChild(textPrice);
@@ -87,10 +92,11 @@ function listOfItems(textId, textName, textWeigh, textPrice, textPlace, textImg)
     divImg.appendChild(img);
 
     div.appendChild(divName);
-    div.appendChild(divWeigh);
-    div.appendChild(divPrice);
     div.appendChild(divPlace);
     div.appendChild(divImg);
+    div.appendChild(divPrice);
+    div.appendChild(divWeigh);
+
 
     let buyButton = renderButton('Buy', 'buy-button')
     let weighButton = renderButton('Weigh', 'weigh-button')
@@ -98,10 +104,10 @@ function listOfItems(textId, textName, textWeigh, textPrice, textPlace, textImg)
     div.appendChild(buyButton);
     div.appendChild(weighButton);
 
-    eventToClickBuyButton();
-
     return content.appendChild(div);
 }
+
+eventToClickBuyButton();
 
 function renderButton(textNode, cssClassName) {
     let button = document.createElement('button');
@@ -126,11 +132,21 @@ function onBuyButtonClick() {
     let button = this;
     let parent = button.parentElement;
     let child = parent.childNodes;
+
+    let classSelectorName = 'product-name';
     let classSelectorPrice = 'product-price';
     let classSelectorWeigh = 'product-weight';
 
+    let nameOfIdProduct = null;
     let priceOfIdProduct = null;
     let weighOfIdProduct = null;
+
+
+    for (let i = 0; i < child.length; i++) {
+        if (child[i].className == classSelectorName) {
+            nameOfIdProduct = child[i].textContent;
+        }
+    }
 
     for (let i = 0; i < child.length; i++) {
         if (child[i].className == classSelectorPrice) {
@@ -144,5 +160,61 @@ function onBuyButtonClick() {
         }
     }
 
-    alert(priceOfIdProduct * weighOfIdProduct)
+    userBasket(nameOfIdProduct, priceOfIdProduct, weighOfIdProduct);
+}
+
+function userBasket(name, price, weigh) {
+    let ul = document.getElementById('user-items');
+    let li = document.createElement('li');
+    let strongPrice = document.createElement('strong');
+    let strongName = document.createElement('strong');
+
+    let resultPrice = price * weigh / 100;
+
+    resultPrice = parseFloat(resultPrice).toFixed(2);
+
+    resultPrice = document.createTextNode(resultPrice + "$");
+
+
+    name = document.createTextNode(name + " ")
+    price = document.createTextNode(price + "$ ")
+    weigh = document.createTextNode(weigh + "g are ")
+
+    strongPrice.appendChild(resultPrice);
+    strongName.appendChild(name);
+
+    li.appendChild(strongName);
+    li.appendChild(price);
+    li.appendChild(weigh);
+    li.appendChild(strongPrice);
+
+    return ul.appendChild(li);
+}
+
+searchProduct();
+function searchProduct() {
+    let inputSearch = document.getElementById('findItems');
+
+    inputSearch.onkeyup = function() {
+        let filter = inputSearch.value.toUpperCase();
+        let content = document.getElementById('product-content');
+        content.innerHTML = "";
+
+        for (let i = 0; i < arrayOfProducts.length; i++) {
+
+            let textId    = arrayOfProducts[i].id;
+            let textWeigh = arrayOfProducts[i].weigh;
+            let textImg   = arrayOfProducts[i].img;
+
+            let textName  = arrayOfProducts[i].name;
+            let textPrice = arrayOfProducts[i].price;
+            let textPlace = arrayOfProducts[i].place;
+
+            if ((textName.toUpperCase().indexOf(filter) > -1) ||
+            (textPlace.toUpperCase().indexOf(filter) > -1)) {
+                listOfItems(textId, textName, textWeigh, textPrice, textPlace, textImg);
+                eventToClickBuyButton();
+            }
+        }
+    };
 }

@@ -10,9 +10,23 @@
         <div class="container">
             <div class="text-container">
                 <h1 id="title">Market</h1>
-                <input type="text" name="findItems" placeholder="Search..." value="">
+                <div class="search-box">
+                    <input id="findItems" type="text" name="search" placeholder="Search...">
+                    <div class="search-items"></div>
+                </div>
             </div>
-            <div id="product-content"></div>
+            <div class="item-content">
+                <div class="left-side">
+                    <div id="product-content"></div>
+                </div>
+                <div class="right-side">
+                    <div id="basket-content" class="item">
+                        <h2 id="title">Your basket</h1>
+                        <ol id="user-items"></ol>
+                        <hr>
+                    </div>
+                </div>
+            </div>
         </div>
     </body>
     <script type="text/javascript" src="js/main.js"></script>
