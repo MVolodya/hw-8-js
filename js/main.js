@@ -141,6 +141,7 @@ function onBuyButtonClick() {
     let priceOfIdProduct = null;
     let weighOfIdProduct = null;
 
+    let maxTotal = 15;
 
     for (let i = 0; i < child.length; i++) {
         if (child[i].className == classSelectorName) {
@@ -160,7 +161,12 @@ function onBuyButtonClick() {
         }
     }
 
-    userBasket(nameOfIdProduct, priceOfIdProduct, weighOfIdProduct);
+    if (arrayOfUserBasket.length >= maxTotal) {
+        alert("Sorry, limit of basket are 15 items");
+    } else {
+        userBasket(nameOfIdProduct, priceOfIdProduct, weighOfIdProduct);
+    }
+
 }
 
 function userBasket(name, price, weigh) {
@@ -172,6 +178,9 @@ function userBasket(name, price, weigh) {
     let resultPrice = price * weigh / 100;
 
     resultPrice = parseFloat(resultPrice).toFixed(2);
+
+    arrayOfUserBasket.push(resultPrice);
+    totalPrice(arrayOfUserBasket);
 
     resultPrice = document.createTextNode(resultPrice + "$");
 
@@ -189,6 +198,25 @@ function userBasket(name, price, weigh) {
     li.appendChild(strongPrice);
 
     return ul.appendChild(li);
+}
+
+function totalPrice(arr) {
+    let id = document.getElementById('total-price');
+    id.innerHTML = "";
+
+    let sum = 0;
+
+    for(let i = 0; i < arr.length; i++) {
+        let current = parseFloat(arr[i]);
+        sum += current;
+    }
+
+    sum = parseFloat(sum).toFixed(2);
+
+    let text = document.createTextNode("Total price are: " + sum + "$");
+
+    id.appendChild(text);
+
 }
 
 searchProduct();

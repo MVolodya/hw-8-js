@@ -95,12 +95,10 @@ h1#title::after {
 
 #basket-content {
     width: 300px;
-    position: fixed;
-    right: 40px;
 }
 
 #user-items li {
-    padding: 10px;
+    padding: 5px;
 }
 
 .product-price, .product-weight {
@@ -130,9 +128,7 @@ h1#title::after {
     margin: 5px 0 0 10px;
 }
 
-#basket-content ol {
-    padding-left: 20px;
-}
+
 
 .search-box input[type="text"] {
     margin: 22px 0 0 32px;
