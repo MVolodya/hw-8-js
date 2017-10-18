@@ -120,18 +120,23 @@ function renderButton(textNode, cssClassName) {
 }
 
 function eventToClickBuyButton() {
-    let buttons = document.getElementsByClassName('buy-button')
+    let buyButtons = document.getElementsByClassName('buy-button');
+    let weighButtons = document.getElementsByClassName('weigh-button');
 
-    for (let i = 0; i < buttons.length; i++) {
-        buttons[i].onclick = onBuyButtonClick;
+    for (let i = 0; i < buyButtons.length; i++) {
+        buyButtons[i].onclick = onButtonClick;
+    }
+
+    for (let i = 0; i < weighButtons.length; i++) {
+        weighButtons[i].onclick = onButtonClick;
     }
 }
 
-
-function onBuyButtonClick() {
+function onButtonClick() {
     let button = this;
     let parent = button.parentElement;
     let child = parent.childNodes;
+    let buttonClassName = button.className;
 
     let classSelectorName = 'product-name';
     let classSelectorPrice = 'product-price';
@@ -161,12 +166,21 @@ function onBuyButtonClick() {
         }
     }
 
-    if (arrayOfUserBasket.length >= maxTotal) {
-        alert("Sorry, limit of basket are 15 items");
-    } else {
-        userBasket(nameOfIdProduct, priceOfIdProduct, weighOfIdProduct);
-    }
 
+    let resultWeigh = userPrice(priceOfIdProduct, weighOfIdProduct);
+    let text = nameOfIdProduct +
+                "\nWeigh are: " + weighOfIdProduct +
+                "\nPrice: " + resultWeigh + "$";
+
+    if (buttonClassName == "button-template weigh-button") {
+        alert(text)
+    } else {
+        if (arrayOfUserBasket.length >= maxTotal) {
+            alert("Sorry, limit of basket are 15 items");
+        } else {
+            userBasket(nameOfIdProduct, priceOfIdProduct, weighOfIdProduct);
+        }
+    }
 }
 
 function userBasket(name, price, weigh) {
@@ -175,9 +189,7 @@ function userBasket(name, price, weigh) {
     let strongPrice = document.createElement('strong');
     let strongName = document.createElement('strong');
 
-    let resultPrice = price * weigh / 100;
-
-    resultPrice = parseFloat(resultPrice).toFixed(2);
+    let resultPrice = userPrice(price, weigh);
 
     arrayOfUserBasket.push(resultPrice);
     totalPrice(arrayOfUserBasket);
@@ -198,6 +210,12 @@ function userBasket(name, price, weigh) {
     li.appendChild(strongPrice);
 
     return ul.appendChild(li);
+}
+
+function userPrice(price, weigh) {
+    let resultPrice = price * weigh / 100;
+    resultPrice = parseFloat(resultPrice).toFixed(2);
+    return resultPrice;
 }
 
 function totalPrice(arr) {
